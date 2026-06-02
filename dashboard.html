@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель Директора</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0d0e12;
+            color: #ffffff;
+            padding: 40px;
+        }
+
+        .header-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #232838;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 { color: #00f2fe; margin: 0; font-size: 2rem; }
+
+        .back-btn {
+            color: #a0aec0;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .back-btn:hover { color: #ffffff; }
+
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto 0;
+            background: #161922;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #232838;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .auth-container h2 { margin-top: 0; color: #00f2fe; }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0d0e12;
+            border: 1px solid #232838;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: #0d0e12;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .card {
+            background: #161922;
+            border: 1px solid #232838;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card h2 { margin-top: 0; font-size: 1.5rem; color: #ffffff; }
+        
+        .info-row { margin: 15px 0; font-size: 1.1rem; color: #a0aec0; }
+        .info-row strong { color: #fff; }
+
+        /* Стиль для ссылки на ВК */
+        .vk-link {
+            color: #00f2fe;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .vk-link:hover { text-decoration: underline; }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover { opacity: 0.9; }
+        .btn-approve { background: #2ed573; color: white; }
+        .btn-reject { background: #ff4757; color: white; }
+
+        .no-data {
+            text-align: center;
+            color: #718096;
+            font-size: 1.2rem;
+            margin-top: 50px;
+        }
+
+        #adminPanelContent { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="authBlock" class="auth-container">
+        <h2>Доступ ограничен</h2>
+        <p style="color: #a0aec0; margin-bottom: 20px;">Введите секретное кодовое слово директора</p>
+        <input type="password" id="secretWordInput" class="auth-input" placeholder="Введите кодовое слово...">
+        <button class="auth-btn" onclick="checkSecretWord()">Войти в кабинет</button>
+    </div>
+
+    <div id="adminPanelContent">
+        <div class="header-box">
+            <h1>Кабинет Директора Школы</h1>
+            <a href="index.html" class="back-btn">← На главную</a>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        // Вход по нажатию клавиши Enter
+        document.getElementById('secretWordInput')
+
+
+dEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkSecretWord();
+            }
+        });
+
+        function checkSecretWord() {
+            const inputField = document.getElementById('secretWordInput');
+            const userPassword = inputField.value.trim().toLowerCase();
+            
+            const correctPassword = "куратор самый лучший";
+
+            if (userPassword === correctPassword) {
+                document.getElementById('authBlock').style.display = 'none';
+                document.getElementById('adminPanelContent').style.display = 'block';
+                loadApplication();
+            } else {
+                alert('Неверное кодовое слово! Доступ отклонен.');
+                inputField.value = '';
+            }
+        }
+
+        function loadApplication() {
+            const data = localStorage.getItem('school_application');
+            const contentDiv = document.getElementById('content');
+
+            if (!data) {
+                contentDiv.innerHTML = '<p class="no-data">Новых заявок пока нет. Ждем заполнения анкет на сайте!</p>';
+                return;
+            }
+
+            const applicant = JSON.parse(data);
+
+            if (applicant.status === 'Принят' || applicant.status === 'Отклонен') {
+                contentDiv.innerHTML = '<p class="no-data">Все заявки успешно обработаны!</p>';
+                return;
+            }
+
+            // Автоматически делаем ссылку на ВК кликабельной
+            let vkHref = applicant.vk;
+            if (!vkHref.startsWith('http')) {
+                vkHref = `https://vk.com{vkHref.replace('@', '')}`;
+            }
+
+            contentDiv.innerHTML = `
+                <div class="card">
+                    <h2>Новая заявка в школу</h2>
+                    <div class="info-row"><strong>ФИО кандидата:</strong> ${applicant.name}</div>
+                    <div class="info-row"><strong>Дата рождения:</strong> ${applicant.bdate}</div>
+                    <div class="info-row"><strong>VK для связи:</strong> <a href="${vkHref}" target="_blank" class="vk-link">${applicant.vk}</a></div>
+                    
+                    <div class="actions">
+                        <button class="btn btn-approve" onclick="updateStatus('Принят')">Принять в школу</button>
+                        <button class="btn btn-reject" onclick="updateStatus('Отклонен')">Отклонить заявку</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateStatus(newStatus) {
+            const data = localStorage.getItem('school_application');
+            if (data) {
+                const applicant = JSON.parse(data);
+                applicant.status = newStatus;
+                
+                localStorage.setItem('school_application', JSON.stringify(applicant));
+                
+                alert(`Вы приняли решение: ${newStatus}. Анкета удалена из списка новых.`);
+                loadApplication();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виртуальная педагогическая практика</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0d0e12;
+            color: #ffffff;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .admin-login-btn {
+            background: transparent;
+            color: #00f2fe;
+            border: 2px solid #00f2fe;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .admin-login-btn:hover {
+            background: #00f2fe;
+            color: #0d0e12;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            background: radial-gradient(circle at center, #1a1c29 0%, #0d0e12 100%);
+            position: relative;
+        }
+
+        .hero-section h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            color: #a0aec0;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-btn {
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: #0d0e12;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .skills-section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skills-section h2, .form-section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background: #161922;
+            border: 1px solid #232838;
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .skill-card h3 { color: #00f2fe; margin-top: 15px; }
+        .skill-card p { color: #a0aec0; line-height: 1.6; }
+
+        .form-section { padding: 100px 20px; background: #10121a; }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #161922;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid #232838;
+        }
+
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #a0aec0; }
+        .form-group input {
+            width: 100%; padding: 12px 15px; background: #0d0e12;
+            border: 1px solid #232838; border-radius: 8px; color: white;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            width: 100%; background: linear-gradient(90deg, #00f2fe, #4facfe);
+            color: #0d0e12; border: none; padding: 15px;
+            font-size: 1.1rem; font-weight: bold; border-radius: 8px; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Ссылка ведет на панель директора. Проверьте, чтобы имя файла панели совпадало (например, dashboard.html или
+
+
+dmin.html) -->
+        <a href="dashboard.html" class="admin-login-btn">Личный кабинет директора</a>
+    </header>
+
+    <section class="hero-section">
+        <h1>Стань наставником виртуального класса</h1>
+        <p>Попробуй себя в роли педагога! Управляй школьным журналом, выставляй оценки виртуальным ученикам под моим кураторством.</p>
+        <a href="#register" class="cta-btn">Заполнить анкету</a>
+    </section>
+
+    <section id="skills" class="skills-section">
+        <h2>Чему ты научишься у нас</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div>📊</div>
+                <h3>Уверенно вести журнал</h3>
+                <p>Ты разберешься, как устроен журнал. Научишься без ошибок выставлять оценки и следить за успеваемостью.</p>
+            </div>
+            <div class="skill-card">
+                <div>🤖</div>
+                <h3>Работать с виртуальным классом</h3>
+                <p>В твоем распоряжении будут виртуальные ученики, на которых можно отработать все действия реального учителя.</p>
+            </div>
+            <div class="skill-card">
+                <div>🤝</div>
+                <h3>Получать поддержку куратора</h3>
+                <p>Я буду твоим личным наставником. Подскажу лайфхаки и помогу не запутаться в правилах.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" class="form-section">
+        <h2>Подать заявку в школу</h2>
+        <div class="container">
+            <form id="applicationForm" onsubmit="saveApplication(event)">
+                <div class="form-group">
+                    <label for="fullName">Фамилия, Имя и Отчество (ФИО)</label>
+                    <input type="text" id="fullName" required placeholder="Иванов Иван Иванович">
+                </div>
+                <div class="form-group">
+                    <label for="birthDate">Дата рождения</label>
+                    <input type="date" id="birthDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="vkId">Ваш VK ID или ссылка на профиль</label>
+                    <input type="text" id="vkId" required placeholder="id12345678 или никнейм">
+                </div>
+                <button type="submit" class="submit-btn">Отправить анкету</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        function saveApplication(event) {
+            event.preventDefault();
+            
+            const applicant = {
+                name: document.getElementById('fullName').value,
+                bdate: document.getElementById('birthDate').value,
+                vk: document.getElementById('vkId').value,
+                status: 'В обработке'
+            };
+
+            localStorage.setItem('school_application', JSON.stringify(applicant));
+            
+            alert('Ваша анкета успешно отправлена куратору! Ожидайте решения.');
+            document.getElementById('applicationForm').reset();
+        }
+    </script>
+</body>
+</html> 
